@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NComputer - Dépannage informatique Montpellier</title>
+  <style>
+    /* 🎨 Reset & Base */
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family:'Poppins', sans-serif; line-height:1.6; color:#222; background:#f9f9f9;}
+    a {text-decoration:none; color:inherit;}
+    img {max-width:100%; display:block;}
+
+    /* 🌐 Header */
+    header {
+      background:#f9f9f9;
+      color:#0a1a2f;
+      padding:1rem 2rem;
+      position:fixed; top:0; left:0; right:0;
+      z-index:1000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      transition:background 0.3s;
+    }
+    header nav a {margin-left:20px; color:#0a1a2f; font-weight:500;}
+    header nav a:hover {color:#4dabf7;}
+
+    /* Burger menu */
+    .burger {
+      display:none;
+      flex-direction:column;
+      justify-content:space-between;
+      width:25px;
+      height:20px;
+      cursor:pointer;
+    }
+    .burger div {height:3px; background:#0a1a2f; border-radius:2px; transition:all 0.3s ease;}
+
+    /* 🌐 Layout Sections */
+    section {padding:120px 20px 80px; max-width:1200px; margin:auto; opacity:0; transform:translateY(50px); transition:opacity 0.8s ease, transform 0.8s ease;}
+    section.show {opacity:1; transform:translateY(0);}
+    h1,h2,h3 {margin-bottom:20px; font-weight:600;}
+    h1 {font-size:2.5rem; color:#0a1a2f;}
+    h2 {font-size:2rem; color:#0a1a2f;}
+
+    /* 🎯 Hero */
+    #hero {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;}
+    #hero h1 {color:#0a1a2f;}
+    #hero p {font-size:1.2rem; margin:20px 0;}
+
+    /* 🎨 Bouton Bleu Nuit */
+    .btn {background:#0b1a3b; color:#fff; padding:12px 25px; border-radius:8px; transition:transform 0.3s, background 0.3s; display:inline-block;}
+    .btn:hover {background:#1c2a5a; transform:scale(1.05);}
+
+    /* 🛠 Services */
+    .services {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px;}
+    .service-card {
+      background:#fff; padding:20px; border-radius:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center;
+      transition:transform 0.3s, opacity 0.5s; opacity:0; transform:translateY(30px);
+    }
+    .service-card.show {opacity:1; transform:translateY(0);}
+    .service-card:hover {transform:translateY(-5px) scale(1.02);}
+    .service-card.disabled {background:#e0e0e0; color:#888; cursor:not-allowed; pointer-events:none; transform:none !important; opacity:0.7;}
+
+    /* 💰 Tarifs */
+    table {width:100%; border-collapse:collapse; background:#fff; border-radius:10px; overflow:hidden;}
+    th, td {padding:15px; border-bottom:1px solid #eee;}
+    th {background:#0a1a2f; color:#fff; text-align:left;}
+
+/* 💻 Produits */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: transform 0.3s, opacity 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 🔹 Animation au survol du conteneur */
+.product:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.product h3 {
+  margin: 10px 0;
+}
+
+.product p {
+  margin: 5px 0;
+}
+
+.product .btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+ 
+/* 🔹 Image produit */
+.product img {
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: transform 0.3s;
+}
+
+    /* ⭐ Avis */
+    .reviews {display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:20px;}
+    .review {background:#fff; padding:20px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-style:italic; opacity:0; transform:translateY(30px); transition:transform 0.5s, opacity 0.5s;}
+    .review.show {opacity:1; transform:translateY(0);}
+
+    /* 📩 Contact */
+    form {display:grid; gap:15px; max-width:500px; margin:auto;}
+    input, textarea {padding:12px; border:1px solid #ccc; border-radius:5px;}
+    button {background:#0b1a3b; color:#fff; padding:12px; border:none; border-radius:5px; cursor:pointer; transition:transform 0.3s, background 0.3s;}
+    button:hover {background:#1c2a5a; transform:scale(1.05);}
+
+    /* 📍 Footer */
+    footer {background:#0a1a2f; color:#fff; text-align:center; padding:20px; margin-top:50px;}
+
+    /* 📱 Responsive */
+    @media (max-width:768px){
+      header nav {position:absolute; top:70px; right:0; background:#f9f9f9; flex-direction:column; width:200px; display:none; box-shadow:0 2px 8px rgba(0,0,0,0.2); border-radius:8px; padding:10px;}
+      header nav a {margin:10px 0;}
+      header nav.active {display:flex;}
+      .burger{display:flex;}
+      .burger.toggle div:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+      .burger.toggle div:nth-child(2){opacity:0;}
+      .burger.toggle div:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    }
+
+    /* Hero title */
+    .hero-title{font-size:4rem; font-weight:900; color:#0a1a2f; margin-bottom:20px; letter-spacing:2px; text-align:center;}
+    #hero{height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:15px;}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo"><strong>NComputer</strong></div>
+    <nav>
+      <a href="#hero">Accueil</a>
+      <a href="#services">Services</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#products">Ordinateurs</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="burger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="hero">
+    <h1 class="hero-title">NComputer</h1>
+    <p>Dépannage & Réparation Informatique à Montpellier</p>
+    <p>Rapide • Fiable • Tarifs transparents</p>
+    <a href="#contact" class="btn">Demander un devis gratuit</a>
+  </section>
+
+  <!-- Services -->
+<section id="services">
+  <h2>Nos Services</h2>
+  <div class="services">
+    <div class="service-card">💻 Réparation PC portables & fixes</div>
+    <div class="service-card">⚡ Montage PC Gamer sur mesure</div>
+    <div class="service-card">🛠 Installation & optimisation Windows</div>
+    <div class="service-card disabled">📱 Réparation téléphone (bientôt)</div>
+    <a href="https://www.leboncoin.fr/profile/be90f62a-4697-4881-866f-19d76f21cf8e" target="_blank" class="service-card">
+      🔄 Vente PC reconditionnés
+    </a>
+  </div>
+</section>
+
+  <!-- Tarifs -->
+  <section id="tarifs">
+    <h2>Tarifs</h2>
+    <table>
+      <tr><th>Service</th><th>Prix</th></tr>
+      <tr><td>Installation Windows</td><td>40€</td></tr>
+      <tr><td>Remplacement SSD + clonage</td><td>60€</td></tr>
+      <tr><td>Nettoyage complet PC</td><td>50€</td></tr>
+      <tr><td>Diagnostic & devis</td><td>Gratuit</td></tr>
+    </table>
+  </section>
+
+  <!-- Produits -->
+<section id="products">
+  <h2>Ordinateurs disponibles</h2>
+  <div class="products">
+    <a href="https://www.leboncoin.fr/ad/ordinateurs/3063036414" class="product" target="_blank">
+      <img src="https://img.leboncoin.fr/api/v1/lbcpb1/images/d4/1d/d6/d41dd6f3504d183a34aafc724499267258238650.jpg?rule=classified-1200x800-webp" alt="PC">
+      <h3>Dell Vostro 15 3568</h3>
+      <p>Intel i5 • 8Go RAM • SSD 256Go</p>
+      <span class="btn">Voir sur Leboncoin</span>
+    </a>
+    <a href="https://www.leboncoin.fr/ad/ordinateurs/3063015409" class="product" target="_blank">
+      <img src="https://img.leboncoin.fr/api/v1/lbcpb1/images/d8/5b/bf/d85bbfb23e956848f30f86b663679a9f5a895708.jpg?rule=classified-1200x800-webp" alt="PC">
+      <h3>Dell Latitude 3500 - Très bon état</h3>
+      <p>Intel i5 • 16Go RAM • SSD 512Go</p>
+      <span class="btn">Voir sur Leboncoin</span>
+    </a>
+  </div>
+</section>
+
+
+  <!-- Avis -->
+  <section id="avis">
+    <h2>Avis Clients</h2>
+    <div class="reviews">
+      <div class="review">5⭐ Très bien je recommande !!! - Acheteur LeBonCoin</div>
+      <div class="review">5⭐ Avis automatique : transaction réalisée avec succès ! - Acheteur LeBonCoin</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <form id="contactForm">
+      <input type="text" id="user_name" name="user_name" placeholder="Votre nom" required>
+      <input type="email" id="user_email" name="user_email" placeholder="Votre email" required>
+      <input type="text" id="subject" name="subject" placeholder="Objet" required>
+      <textarea id="message" name="message" placeholder="Votre message" rows="5" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 NComputer - Dépannage informatique Montpellier</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // Scroll smooth
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function(e){
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+      });
+    });
+
+    // IntersectionObserver
+    const sections = document.querySelectorAll('section, .service-card, .product, .review');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){ entry.target.classList.add('show'); }
+        else{ entry.target.classList.remove('show'); }
+      });
+    }, {threshold:0.2});
+    sections.forEach(el => observer.observe(el));
+
+    // Burger toggle
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('header nav');
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      burger.classList.toggle('toggle');
+    });
+
+    emailjs.init('ViFR4aDeKjiyC2vyf');
+  const form = document.getElementById('contactForm');
+  const serviceCards = document.querySelectorAll('.service-card');
+
+  // Pré-remplissage Objet depuis services
+  serviceCards.forEach(card => {
+    if(!card.classList.contains('disabled')){
+      card.style.cursor='pointer';
+      card.addEventListener('click', ()=> {
+        form.querySelector('input[name="subject"]').value = `Demande pour : ${card.textContent}`;
+        window.location.href="#contact";
+      });
+    }
+  });
+
+  // Formulaire submit : envoi à toi + auto-reply client
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    // Envoi à toi-même
+    emailjs.sendForm('service_8h66pwb', 'template_al2663e', this)
+      .then(() => {
+        // Envoi auto-reply au client
+        emailjs.send('service_8h66pwb', 'template_7vnnntr', {
+          user_name: form.user_name.value,
+          user_email: form.user_email.value,
+          subject: form.subject.value,
+          message: form.message.value
+        })
+        .then(() => {
+          alert('Message envoyé ! Un mail de confirmation a été envoyé au client.');
+          form.reset();
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Erreur lors de l\'envoi du mail auto-reply.');
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Erreur lors de l\'envoi du mail principal.');
+      });
+  });
+</script>
+</body>
+</html>
