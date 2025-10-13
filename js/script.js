@@ -1,12 +1,25 @@
-// 🌐 Smooth Scroll
+// ⬆️ FIX DÉFILEMENT : Désactive la restauration de la position par le navigateur
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+// ⬆️ FORCE LE SCROLL EN HAUT AU CHARGEMENT/RECHARGEMENT DE LA PAGE
+window.onload = function() {
+    window.scrollTo(0, 0);
+};
+
+// 🌐 Smooth Scroll pour les liens d'ancre (sauf le logo)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener("click", function(e){
-    e.preventDefault();
-    document.querySelector(this.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+    // Le logo a un ID 'logo-link' et est géré séparément pour forcer un rechargement.
+    if (this.id !== 'logo-link') {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+    }
   });
 });
 
-// 🌟 IntersectionObserver pour animations
+// 🌟 IntersectionObserver pour animations (fadeIn)
 const sections = document.querySelectorAll('section, .service-card, .product, .review');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -15,9 +28,6 @@ const observer = new IntersectionObserver(entries => {
       const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
       entry.target.style.transitionDelay = `${index * 0.05}s`;
       entry.target.classList.add('show'); 
-    } else { 
-      // On retire la classe show pour que l'animation se rejoue en scrollant
-      // entry.target.classList.remove('show'); 
     }
   });
 }, {threshold:0.2});
@@ -32,38 +42,53 @@ burger.addEventListener('click', () => {
   burger.classList.toggle('toggle');
 });
 
+// 📌 GESTION DU LOGO : Clic et Rechargement de la page
+const logoLink = document.getElementById('logo-link');
 
-// ✉️ EmailJS init
-// Assurez-vous que l'initialisation est toujours la première étape pour EmailJS
-emailjs.init('ViFR4aDeKjiyC2vyf');
+if (logoLink) {
+    logoLink.addEventListener('click', function(e) {
+        e.preventDefault(); 
+        
+        // 1. Scroll instantané vers le haut
+        window.scrollTo({ top: 0, behavior: 'auto' }); 
 
+        // 2. Déclencher le rechargement de la page
+        setTimeout(() => {
+            window.location.reload();
+        }, 10); 
+    });
+}
+
+
+// 📧 EmailJS et Formulaire
 const form = document.getElementById('contactForm');
-const serviceCards = document.querySelectorAll('.service-card');
 
-// 📌 Pré-remplissage objet du formulaire depuis les services (exclut les liens/disabled)
-serviceCards.forEach(card => {
-  // S'assurer que ce n'est pas la carte 'disabled' ET que ce n'est pas un lien <a>
-  if(!card.classList.contains('disabled') && card.tagName !== 'A'){ 
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => {
-      // Pour une meilleure lecture dans le mail
+// Fonctionnalité : Pré-remplir l'objet depuis le clic sur les cartes Service
+document.addEventListener('DOMContentLoaded', function() {
+  const serviceCards = document.querySelectorAll('.service-card:not(.disabled)');
+
+  for (const card of serviceCards) {
+    card.addEventListener('click', function() {
       const serviceText = card.textContent.trim().replace(/\s+/g, ' '); 
       form.querySelector('input[name="subject"]').value = `Demande de service : ${serviceText}`;
-      // Ferme le menu burger sur mobile après la sélection
+      
+      // Fermer le menu burger sur mobile après la sélection
       if(nav.classList.contains('active')) {
           nav.classList.remove('active');
           burger.classList.remove('toggle');
       }
-      window.location.href="#contact"; // Scroll vers la section contact
+      
+      // Scroll vers la section contact
+      window.location.href="#contact"; 
     });
   }
 });
 
-// 📧 Gestion du formulaire : envoi à toi + auto-reply client
+// Gestion de l'envoi du formulaire (EmailJS)
 form.addEventListener('submit', function(e){
   e.preventDefault();
 
-  // Envoi principal à toi-même
+  // Envoi principal à l'administrateur
   emailjs.sendForm('service_8h66pwb', 'template_al2663e', this)
     .then(() => {
       // Auto-reply au client
@@ -79,11 +104,10 @@ form.addEventListener('submit', function(e){
       })
       .catch(err => {
         console.error('Erreur lors de l\'envoi du mail auto-reply:', err);
-        alert('Message envoyé ! (Erreur lors de l\'envoi du mail de confirmation client).');
+        alert('Message envoyé ! (Erreur lors de l\'envoi du mail de confirmation automatique.)');
       });
-    })
-    .catch(err => {
-      console.error('Erreur lors de l\'envoi du mail principal:', err);
-      alert('Une erreur s\'est produite lors de l\'envoi de votre message.');
+    }, (error) => {
+      console.error('Erreur lors de l\'envoi principal:', error);
+      alert('Erreur lors de l\'envoi du message. Veuillez réessayer ou utiliser un autre moyen de contact.');
     });
 });

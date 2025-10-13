@@ -4,17 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NComputer - Dépannage informatique Montpellier</title>
-  <!-- Inclusion de la police Google Poppins pour un look moderne -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-  <!-- Inclusion de Font Awesome pour les icônes professionnelles -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Header -->
   <header>
-    <div class="logo"><strong>NComputer</strong></div>
+    <a href="#hero" class="logo" id="logo-link">
+      <img src="images\logotexte.png" alt="Logo NComputer">
+    </a>
     <nav>
       <a href="#hero">Accueil</a>
       <a href="#services">Services</a>
@@ -27,7 +26,6 @@
     </div>
   </header>
 
-  <!-- Hero -->
   <section id="hero">
     <h1 class="hero-title">NComputer</h1>
     <p>Dépannage & Réparation Informatique à Montpellier</p>
@@ -35,11 +33,9 @@
     <a href="#contact" class="btn">Demander un devis gratuit</a>
   </section>
 
-  <!-- Services -->
   <section id="services">
     <h2>Nos Services</h2>
     <div class="services">
-      <!-- Ajout d'icônes Font Awesome pour chaque service -->
       <div class="service-card"><i class="fa-solid fa-laptop-code"></i> Réparation PC portables & fixes</div>
       <div class="service-card"><i class="fa-solid fa-virus-slash"></i> Désinfection et optimisation</div>
       <div class="service-card"><i class="fa-solid fa-wifi"></i> Installation Internet & Box</div>
@@ -49,7 +45,6 @@
     </div>
   </section>
 
-  <!-- Tarifs -->
   <section id="tarifs">
     <h2>Tarifs</h2>
     <div class="container">
@@ -87,7 +82,6 @@
     </div>
   </section>
 
-  <!-- Produits -->
   <section id="products">
     <h2>Ordinateurs Reconditionnés</h2>
     <div class="products">
@@ -106,7 +100,6 @@
     </div>
   </section>
 
-  <!-- Avis -->
   <section id="avis">
     <h2>Avis Clients</h2>
     <div class="reviews">
@@ -115,7 +108,6 @@
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
     <h2>Contact</h2>
     <form id="contactForm">
@@ -127,12 +119,10 @@
     </form>
   </section>
 
-  <!-- Footer -->
   <footer>
     &copy; 2024 NComputer. Tous droits réservés. | Montpellier
   </footer>
 
-  <!-- Librairies JS -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script src="js/script.js"></script>
 </body>

@@ -46,7 +46,11 @@ img {
 header {
     background: var(--light-bg);
     color: var(--primary-color);
-    padding: 1rem 2rem;
+    
+    /* Hauteur fixe compacte */
+    height: 75px; 
+    padding: 0 2rem; /* Suppression du padding vertical (géré par la hauteur) */
+    
     position: fixed;
     top: 0;
     left: 0;
@@ -54,15 +58,30 @@ header {
     z-index: 1000;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; /* Centrage vertical des éléments */
     box-shadow: var(--shadow-light);
     transition: background 0.3s;
 }
 
-.logo strong {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
+.logo {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+}
+
+/* 🎯 Règle pour contrôler la taille du logo (Image) */
+.logo img {
+    /* ⚠️ MODIFIEZ CETTE VALEUR (ex: 45px, 60px, 70px...) */
+    height: 170px; 
+    max-width: none;
+    width: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+
+}
+
+/* 🆕 AJOUT : Animation au survol */
+.logo:hover img {
+    transform: scale(1.05); /* Zoom de 5% */
 }
 
 header nav a {
@@ -111,7 +130,8 @@ header nav a:hover::after {
 
 /* 🌐 Layout Sections */
 section {
-    padding-top: 140px; 
+    /* Ajusté le padding-top à la nouvelle hauteur du header + marge */
+    padding-top: 110px; 
     padding-bottom: 60px;
     opacity: 0;
     transform: translateY(30px);
@@ -225,16 +245,34 @@ h2::after {
     border-radius: 12px;
     box-shadow: var(--shadow-light);
     text-align: center;
-    font-weight: 600;
+    font-weight: 500; /* Plus léger que 600 */
     font-size: 1.1rem;
-    min-height: 120px;
+    min-height: 180px; /* Plus de hauteur pour mieux présenter l'icône */
+    
+    /* 🆕 Flexbox pour centrer Icône et Texte */
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s;
+    transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s, color 0.3s;
     opacity: 0;
     transform: translateY(30px);
+}
+
+.service-card i {
+    /* 🆕 Style de l'icône */
+    font-size: 3rem; /* Très grande icône */
+    color: var(--accent-color); /* Couleur d'accentuation forte */
+    margin-bottom: 15px;
+    transition: color 0.3s;
+}
+
+.service-card p {
+    margin: 0;
+    line-height: 1.4;
+    color: var(--primary-color);
 }
 
 .service-card.show {
@@ -243,9 +281,17 @@ h2::after {
 }
 
 .service-card:hover:not(.disabled) {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-8px) scale(1.01);
     box-shadow: var(--shadow-hover);
-    color: var(--accent-color);
+    color: var(--accent-color); /* Le texte principal prend l'accent au survol */
+}
+
+/* 🆕 Hover : Rendre l'icône et le texte plus sombres (Primary Color) */
+.service-card:hover i {
+    color: var(--primary-color);
+}
+.service-card:hover p {
+    color: var(--primary-color);
 }
 
 .service-card.disabled {
@@ -256,6 +302,12 @@ h2::after {
     transform: none !important;
     opacity: 0.6;
     border: 1px dashed #ccc;
+}
+
+/* 🆕 S'assurer que les éléments désactivés gardent le gris */
+.service-card.disabled i,
+.service-card.disabled p {
+    color: #999 !important;
 }
 
 /* 💰 Tarifs */
@@ -423,6 +475,8 @@ textarea {
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s, box-shadow 0.3s;
+    /* 🆕 AJOUT : Empêche le redimensionnement manuel par l'utilisateur */
+    resize: none; 
 }
 
 input:focus,
@@ -485,7 +539,8 @@ footer {
 
     header nav {
         position: absolute;
-        top: 70px;
+        /* Aligné sur la hauteur fixe de 75px du header */
+        top: 75px; 
         right: 0;
         background: var(--light-bg);
         flex-direction: column;
