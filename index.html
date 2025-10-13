@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NComputer - Dépannage informatique Montpellier</title>
+  <!-- Inclusion de la police Google Poppins pour un look moderne -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <!-- Inclusion de Font Awesome pour les icônes professionnelles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -35,40 +39,66 @@
   <section id="services">
     <h2>Nos Services</h2>
     <div class="services">
-      <div class="service-card">Réparation PC portables & fixes</div>
-      <div class="service-card">Montage PC Gamer sur mesure</div>
-      <div class="service-card">Installation & optimisation Windows</div>
-      <div class="service-card disabled">Réparation téléphone (bientôt)</div>
-      <a href="https://www.leboncoin.fr/profile/be90f62a-4697-4881-866f-19d76f21cf8e" target="_blank" class="service-card">
-        Vente PC reconditionnés
-      </a>
+      <!-- Ajout d'icônes Font Awesome pour chaque service -->
+      <div class="service-card"><i class="fa-solid fa-laptop-code"></i> Réparation PC portables & fixes</div>
+      <div class="service-card"><i class="fa-solid fa-virus-slash"></i> Désinfection et optimisation</div>
+      <div class="service-card"><i class="fa-solid fa-wifi"></i> Installation Internet & Box</div>
+      <div class="service-card"><i class="fa-solid fa-database"></i> Sauvegarde de données</div>
+      <div class="service-card"><i class="fa-solid fa-headset"></i> Assistance à distance</div>
+      <div class="service-card disabled"><i class="fa-solid fa-mobile-screen-button"></i> Réparation Téléphones (à venir)</div>
     </div>
   </section>
 
   <!-- Tarifs -->
   <section id="tarifs">
     <h2>Tarifs</h2>
-    <table>
-      <tr><th>Service</th><th>Prix</th></tr>
-      <tr><td>Installation Windows</td><td>40€</td></tr>
-      <tr><td>Remplacement SSD + clonage</td><td>60€</td></tr>
-      <tr><td>Nettoyage complet PC</td><td>50€</td></tr>
-      <tr><td>Diagnostic & devis</td><td>Gratuit</td></tr>
-    </table>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Tarif (TTC)</th>
+            <th>Détails</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Diagnostic Panne</td>
+            <td>Gratuit si réparation</td>
+            <td>Facturé 30€ si pas de réparation effectuée.</td>
+          </tr>
+          <tr>
+            <td>Désinfection virus, nettoyage complet</td>
+            <td>70€</td>
+            <td>Nettoyage logiciel, optimisation du démarrage.</td>
+          </tr>
+          <tr>
+            <td>Installation d'un OS (Windows, Linux)</td>
+            <td>60€</td>
+            <td>Installation système d'exploitation et drivers.</td>
+          </tr>
+          <tr>
+            <td>Réparation matérielle (écran, disque dur, RAM...)</td>
+            <td>Sur devis</td>
+            <td>Coût de la pièce non inclus.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <!-- Produits -->
   <section id="products">
-    <h2>Ordinateurs disponibles</h2>
+    <h2>Ordinateurs Reconditionnés</h2>
     <div class="products">
-      <a href="https://www.leboncoin.fr/ad/ordinateurs/3063036414" class="product" target="_blank">
-        <img src="images/dell-vostro.jpg" alt="PC Dell">
-        <h3>Dell Vostro 15 3568</h3>
-        <p>Intel i5 • 8Go RAM • SSD 256Go</p>
+      <a href="https://www.leboncoin.fr/ad/ordinateurs/2996172605" class="product" target="_blank">
+        <img src="https://placehold.co/300x200/4dabf7/ffffff?text=PC+Gaming+Performant" onerror="this.onerror=null; this.src='https://placehold.co/300x200/4dabf7/ffffff?text=PC+Gaming+Placeholder';" alt="PC Gaming">
+        <h3>PC Gaming Haute Performance</h3>
+        <p>Intel i7 • 32Go RAM • SSD 1To • NVIDIA RTX 3070</p>
         <span class="btn">Voir sur Leboncoin</span>
       </a>
       <a href="https://www.leboncoin.fr/ad/ordinateurs/3063015409" class="product" target="_blank">
-        <img src="images/dell-latitude.jpg" alt="PC Dell Latitude">
+        <img src="https://placehold.co/300x200/0a1a2f/ffffff?text=PC+Portable+Dell" onerror="this.onerror=null; this.src='https://placehold.co/300x200/0a1a2f/ffffff?text=PC+Portable+Placeholder';" alt="PC Dell Latitude">
         <h3>Dell Latitude 3500 - Très bon état</h3>
         <p>Intel i5 • 16Go RAM • SSD 512Go</p>
         <span class="btn">Voir sur Leboncoin</span>
@@ -99,12 +129,11 @@
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 NComputer - Dépannage informatique Montpellier</p>
+    &copy; 2024 NComputer. Tous droits réservés. | Montpellier
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Librairies JS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script src="js/script.js"></script>
-
 </body>
 </html>
